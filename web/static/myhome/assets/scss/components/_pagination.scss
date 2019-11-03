@@ -1,0 +1,44 @@
+/*------ pagination area style start ------*/
+.paginatoin-area {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f6f6f6;
+    .pagination-box {
+        display: flex;
+        justify-content: center;
+        li {
+            margin-right: 5px;
+            &:last-child {
+                margin-right: 0;
+            }
+            display: inline-block;
+            a {
+                color: $black-soft;
+                height: 36px;
+                width: 36px;
+                font-size: 14px;
+                display: inline-block;
+                padding: 0 10px;
+                text-align: center;
+                line-height: 36px;
+                background-color: $white;
+                i {
+                    font-size: 12px;
+                    line-height: 36px;
+                }
+                &:hover {
+                    color: $white;
+                    border-color: $theme-color;
+                    background-color: $theme-color;
+                }
+            }
+            &.active {
+                a {
+                    color: $white;
+                    background-color: $theme-color;
+                }
+            }
+        }
+    }
+}
+/*------ pagination area style end ------*/

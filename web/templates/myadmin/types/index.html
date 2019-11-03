@@ -1,0 +1,198 @@
+{% extends 'myadmin/base.html' %}
+{% block title%}
+<title>图书分类列表</title>
+{% endblock %}
+{% block con%}
+<div class="row-content am-cf">
+    <div class="row  am-cf">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">图书分类列表</div>
+
+
+                        </div>
+                        <div class="widget-body  am-fr">
+
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span><a href="{% url 'myadmin_type_add'%}" style="color: white;">新增</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="{% url 'myadmin_type_index'%}" method="GET">
+                                {% csrf_token%}
+                                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                        <div class="am-form-group tpl-table-list-select">
+                                            <select data-am-selected="{btnSize: 'sm'}" style="display: none;" name="btype">
+                                                <option value="all" {% ifequal type 'all' %} selected {% endifequal %}>所有类别</option>
+                                                <option value="catename"  {% ifequal type 'catename' %} selected {% endifequal %}>类别名</option>
+                                                <option value="pname"  {% ifequal type 'pname' %} selected {% endifequal %}>父类名</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                            <input name="keywords" type="text" class="am-form-field ">
+                                            <span class="am-input-group-btn">
+                                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                            </form>
+
+                            <div class="am-u-sm-12">
+                                <table width="100%"  class="am-table am-table-compact am-table-striped tpl-table-black ">
+                                    <thead>
+                                        <tr>
+                                            <th  style="text-align: center;">id</th>
+                                            <th  style="text-align: center;">分类名</th>
+                                            <th  style="text-align: center;">所属父类</th>
+                                            <th  style="text-align: center;">path</th>
+                                            <th  style="text-align: center;">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in typelist %}
+                                        <tr class="gradeX" style="text-align: center;">
+                                            <td>
+                                                {{ i.id}}
+                                            </td>
+                                            <td class="am-text-middle">
+                                                <span class="tname" isclick="0">{{i.sj}}{{ i.catename }}</span>
+                                            </td>
+                                            <td class="am-text-middle">
+                                                {% if i.pid == 0 %}
+                                                    顶级分类
+                                                {% else %}
+                                                    {{i.pname}}
+                                                {% endif %}
+                                            </td>
+                                            <td class="am-text-middle">
+                                                {{ i.pn }}
+                                            </td>
+                                            <td class="am-text-middle">
+                                                <div class="tpl-table-black-operation">
+                                                    <a href="">
+                                                        <i class="am-icon-pencil"></i> 编辑
+                                                    </a>
+                                                    <a href="javascript:;"  class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <div class="am-alert" data-am-alert style="position: fixed;top:250px;left:700px;white-space:nowrap; display:none;color: white;border: none;">
+                                                <p style=" text-align: center;"></p>
+                                        </div>
+                                        <script>
+                                            // 用ajax进行删除操作
+                                            $(".tpl-table-black-operation-del").click(function(){
+                                                id=$(this).parents("tr").find("td:first").text()
+                                                $this=$(this)
+                                                $.get('{% url "myadmin_type_delete" %}',{'id':id},function(data){ 
+                                                    if(! data["code"]){
+                                                        $this.parents("tr").remove()
+                                                        show(data["msg"],type=true)
+                                                    }else{
+                                                        show(data["msg"],type=false)
+                                                    }
+                                                },'json')
+                                            })
+
+                                            //删除之后的提示信息
+                                            function show(msg,type=true){
+                                                $(".am-alert").children("p").text(msg)
+                                                $(".am-alert").show()
+                                                if(type){
+                                                    $(".am-alert").css('background','lightblue')
+                                                    
+                                                }else{
+                                                    $(".am-alert").css('background','#FF0000')
+                                                }
+                                                setTimeout(function(){
+                                                    $(".am-alert").hide()
+                                                },1000)
+                                            }
+                                            
+                                            
+                                            //利用ajax在原处进行删除 双击文本，会出现文本框，然后在文本框里修改，修改成功后，在别处点一下
+                                            // 如果出现提示信息，成功，就代表成功
+                                            function moditypename($this){
+                                                is=$this.attr('isclick','1')
+                                                     //先获取name
+                                                tname=$this.text()
+                                              
+                                                //创建input
+                                                input=$('<input type="text" value="'+tname+'" style="color:black;">')
+
+                                                //把input加入到span 
+                                                $this.html(input)
+                                                input.select()
+                                                //给input绑定丧失焦点事件，获取新的类名
+                                                input.blur(function(){
+                                                    
+                                                    newname=$(this).val()
+                                                    //判断当前newname是否更新了
+                                                    if(newname==tname){
+                                                        //不需要后台更新
+                                                        $this.text(tname)
+                                                        
+                                                    }else{
+                                                        //发送ajax请求后台修改数据
+                                                        id=$this.parents("tr").find("td:first").text()
+                                                        $.get('{% url "myadmin_type_edit" %}',{'id':id,'catename':newname},function(data){
+                                                                //成功
+                                                                if(data['code']==0){
+                                                                    $this.text(newname)
+                                                                    show(data['msg'],type=true)
+                                                                }else{
+                                                                    $this.text(tname)
+                                                                    show(data['msg'],type=false)
+                                                                }   
+                                                        },'json')
+                                                    }
+                                                    is=$this.attr('isclick','0')
+                                                })
+                                            }
+
+
+                                            // #修改图书类名称
+                                            //绑定双击事件
+                                            $(".tname").dblclick(function(){
+                                                is=$(this).attr('isclick')
+                                                // console.log(is,typeof(is))
+                                                if(is=='0'){
+                                                    moditypename($(this))
+                                                }
+                                            })
+                                        </script>
+                                        {% endfor %}
+                                        <!-- more data -->
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                        {% load pagetag %}
+                                        {% PageShow page request %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                           
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+{% endblock %}

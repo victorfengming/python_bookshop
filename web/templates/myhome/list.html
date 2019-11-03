@@ -1,0 +1,298 @@
+{% extends 'myhome/base.html'%}
+{% block title%}
+<title>图书列表页</title>
+{% endblock %}
+{% block con %}
+    <!-- breadcrumbs-area-start -->
+    <div class="breadcrumbs-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="/">首页</a></li>
+                            {% if list_detail.parent == list_detail.catename %}
+                            <li><a href="{% url 'myhome_booklist' list_detail.id %}" class="active">{{list_detail.catename}}</a></li>
+                            {% else %}
+                            <li><a href="{% url 'myhome_booklist' list_detail.pid %}">{{list_detail.parent}}</a></li>
+                            <li><a href="{% url 'myhome_booklist' list_detail.id %}" class="active">{{list_detail.catename}}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- breadcrumbs-area-end -->
+    <!-- shop-main-area-start -->
+    <div class="shop-main-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="shop-left">
+                        <div class="section-title-5 mb-30">
+                            <h2>图书专项类别</h2>
+                        </div>
+                        <div class="left-title mb-20">
+                            <h4>{{list_detail.parent}}</h4>
+                        </div>
+                        <div class="left-menu mb-30">
+                            <ul>
+                                {% for i in list_detail.sub %}
+                                <li><a href="{% url 'myhome_booklist' i.id %}" ><b {% if i.id == list_detail.id %} style="color: #f07c29;"{% endif %}>{{i.catename}}<span>{{i.books_set.all.count}}</span></b></a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="left-title mb-20">
+                            <h4>Price</h4>
+                        </div>
+                        <div class="left-menu mb-30">
+                            <ul>
+                                <li><a href="#">$0.00-$9.99<span>(1)</span></a></li>
+                                <li><a href="#">$30.00-$39.99<span>(11)</span></a></li>
+                                <li><a href="#">$40.00-$49.99<span>(2)</span></a></li>
+                                <li><a href="#">$50.00-$59.99<span>(3)</span></a></li>
+                                <li><a href="#">$70.00-and above<span>(1)</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="left-title mb-20">
+                            <h4>随机商品</h4>
+                        </div>
+                        <div class="random-area mb-30">
+                            <div class="product-active-2 owl-carousel">
+                                {% for i in booklist %}
+                                <div class="product-total-2">
+                                    <div class="single-most-product bd mb-18">
+                                        <div class="most-product-img"><a href="{% url 'myhome_bookdetail' i.id  %}"><img src="/{{ i.bookimgs_set.first.img_url }}"  alt="book" /></a></div>
+                                        <div class="most-product-content">
+                                            <div class="product-rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <h4><a href="{% url 'myhome_bookdetail' i.id %}">{{ i.bookname }}</a></h4>
+                                            <div class="product-price">
+                                                <ul>
+                                                    <li>¥{{ i.price }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                    <div class="section-title-5 mb-30">
+                        <h2>专项图书</h2>
+                    </div>
+                    <div class="toolbar mb-30">
+                        <div class="shop-tab">
+                            <div class="tab-3">
+                                <ul>
+                                    <li class="active"><a href="#th" data-toggle="tab"><i class="fa fa-th-large"></i>网格</a></li>
+                                    <li><a href="#list" data-toggle="tab"><i class="fa fa-bars"></i>列表</a></li>
+                                </ul>
+                            </div>
+                            <div class="list-page">
+                                <p>Items 1-9 of 11</p>
+                            </div>
+                        </div>
+                        <div class="field-limiter">
+                            <div class="control"><span>Show</span><!-- chosen-start --><select data-placeholder="Default Sorting" style="width:50px;" class="chosen-select" tabindex="1">
+                                    <option value="Sorting">1</option>
+                                    <option value="popularity">2</option>
+                                    <option value="rating">3</option>
+                                    <option value="date">4</option>
+                                </select><!-- chosen-end -->
+                            </div>
+                        </div>
+                        <div class="toolbar-sorter"><span>Sort By</span><select id="sorter" class="sorter-options" data-role="sorter">
+                                <option selected="selected" value="position">Position</option>
+                                <option value="name">Product Name</option>
+                                <option value="price">Price</option>
+                            </select><a href="#"><i class="fa fa-arrow-up"></i></a></div>
+                    </div><!-- tab-area-start -->
+                    <div class="tab-content">
+                            <div class="tab-pane active" id="th">
+                                    <div class="row">
+                                        <!-- 相等就是顶级分类 -->
+                                        {% if list_detail.parent == list_detail.catename %}
+                                        <!-- 就需要循环顶级分类找到的子类，然后寻找子类所对应的图书 -->
+                                        {% for i in list_detail.sub %}
+                                        {% for v in i.books_set.all %}
+                                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                                <!-- single-product-start -->
+                                                <div class="product-wrapper mb-40">
+                                                    <div class="product-img"><a href="{% url 'myhome_bookdetail' v.id %}"><img src="/{{v.bookimgs_set.first.img_url}}"  alt="book" class="primary" /></a>
+                                                        <div class="product-flag">
+                                                            <ul>
+                                                                <li><span class="sale">new</span></li>
+                                                                <li><span class="discount-percentage">-5%</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-details text-center">
+                                                        <div class="product-rating">
+                                                            <ul>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <h4><a href="{% url 'myhome_bookdetail' v.id %}">{{ v.bookname }}</a></h4>
+                                                        <div class="product-price">
+                                                            <ul>
+                                                                <li>¥{{v.price}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- single-product-end -->
+                                            </div>
+                                    
+                                        {% endfor %}
+                                        {% endfor %}
+                                        {% else %}
+                                        <!-- 否则就是子类 -->
+                                        {% for i in list_detail.books_set.all %}
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                                <!-- single-product-start -->
+                                                <div class="product-wrapper mb-40">
+                                                    <div class="product-img"><a href="{% url 'myhome_bookdetail' i.id %}"><img src="/{{i.bookimgs_set.first.img_url}}"  alt="book" class="primary" /></a>
+                                                        <div class="product-flag">
+                                                            <ul>
+                                                                <li><span class="sale">new</span></li>
+                                                                <li><span class="discount-percentage">-5%</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-details text-center">
+                                                        <div class="product-rating">
+                                                            <ul>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <h4><a href="{% url 'myhome_bookdetail' i.id %}">{{ i.bookname }}</a></h4>
+                                                        <div class="product-price">
+                                                            <ul>
+                                                                <li>¥{{i.price}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- single-product-end -->
+                                            </div>
+                                        {% endfor %}
+                                        {% endif %}
+        
+                                    </div>
+                            </div>
+                        <div class="tab-pane fade" id="list">
+                            <!-- single-shop-start -->
+                            <!-- 相等就是顶级分类 -->
+                            {% if list_detail.parent == list_detail.catename %}
+                            <!-- 就需要循环顶级分类找到的子类，然后寻找子类所对应的图书 -->
+                            {% for i in list_detail.sub %}
+                            {% for v in i.books_set.all %}
+                            <div class="single-shop mb-30">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="product-wrapper-2">
+                                            <div class="product-img">
+                                                <a href="{% url 'myhome_bookdetail' v.id %}">
+                                                    <img src="/{{ v.bookimgs_set.first.img_url }}"  alt="book" class="primary" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                        <div class="product-wrapper-content">
+                                            <div class="product-details">
+                                                <div class="product-rating">
+                                                    <ul>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                <h4><a href="{% url 'myhome_bookdetail' v.id %}">{{ v.bookname }}</a></h4>
+                                                <div class="product-price">
+                                                    <ul>
+                                                        <li>¥{{ v.price}}</li>
+                                                    </ul>
+                                                </div>
+                                                <p>{{ v.recommend }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- single-shop-end -->
+                            {% endfor %}
+                            {% endfor %}
+                            {% else %}
+                            <!-- 否则就是子类 -->
+                            {% for i in list_detail.books_set.all %}
+                            <div class="single-shop mb-30">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="product-wrapper-2">
+                                                <div class="product-img"><a href="{% url 'myhome_bookdetail' i.id %}"><img src="/{{ i.bookimgs_set.first.img_url }}"  alt="book" class="primary" /></a></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                            <div class="product-wrapper-content">
+                                                <div class="product-details">
+                                                    <div class="product-rating">
+                                                        <ul>
+                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <h4><a href="{% url 'myhome_bookdetail' i.id %}">{{ i.bookname }}</a></h4>
+                                                    <div class="product-price">
+                                                        <ul>
+                                                            <li>¥{{ i.price }}</li>
+                                                        </ul>
+                                                    </div>
+                                                    <p>{{ i.recommend }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div><!-- single-shop-end -->
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div><!-- tab-area-end -->
+                    <!-- pagination-area-start -->
+                    <div class="pagination-area mt-50">
+                        <div class="page-number">
+                            <ul>
+                                <li><a href="#" class="active">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#" class="angle"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div><!-- pagination-area-end -->
+                </div>
+            </div>
+        </div>
+    </div><!-- shop-main-area-end -->
+{% endblock %}

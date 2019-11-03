@@ -1,0 +1,9 @@
+__all__=[
+    'LoginViews',
+    'RegisterViews',
+    'IndexViews',
+    'CartViews',
+    'OrderViews',
+    'AddressViews',
+    'UserinfoViews',
+]

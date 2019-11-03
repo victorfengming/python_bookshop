@@ -1,0 +1,144 @@
+{% extends 'myhome/base.html'%}
+{% block title%}
+<title>图书搜索页</title>
+{% endblock %}
+{% block con %}
+    <!-- breadcrumbs-area-start -->
+    <div class="breadcrumbs-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="/">首页</a></li>
+                            <li><a  class="active">图书搜索详情页</a></li>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div><!-- breadcrumbs-area-end -->
+    <!-- shop-main-area-start -->
+    <div class="shop-main-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="shop-left">
+                        <div class="left-title mb-20">
+                            <h4>随机商品</h4>
+                        </div>
+                        <div class="random-area mb-30">
+                            <div class="product-active-2 owl-carousel">
+                                {% for i in book %}
+                                <div class="product-total-2">
+                                    <div class="single-most-product bd mb-18">
+                                        <div class="most-product-img"><a href="{% url 'myhome_bookdetail' i.id  %}"><img src="/{{ i.bookimgs_set.first.img_url }}"  alt="book" /></a></div>
+                                        <div class="most-product-content">
+                                            <div class="product-rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <h4><a href="{% url 'myhome_bookdetail' i.id %}">{{ i.bookname }}</a></h4>
+                                            <div class="product-price">
+                                                <ul>
+                                                    <li>¥{{ i.price }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                   
+                    <div class="toolbar mb-30">
+                        <div class="shop-tab">
+                            <div class="tab-3">
+                                <ul>
+                                    <li  class="active"><a href="#list" data-toggle="tab"><i class="fa fa-bars"></i>列表</a></li>
+                                    <li><a href="#th" data-toggle="tab"><i class="fa fa-th-large"></i>网格</a></li>
+                                   
+                                </ul>
+                            </div>
+                            <div class="list-page">
+                                <p>Items 1-9 of 11</p>
+                            </div>
+                        </div>
+                        <div class="field-limiter">
+                            <div class="control"><span>Show</span><!-- chosen-start --><select data-placeholder="Default Sorting" style="width:50px;" class="chosen-select" tabindex="1">
+                                    <option value="Sorting">1</option>
+                                    <option value="popularity">2</option>
+                                    <option value="rating">3</option>
+                                    <option value="date">4</option>
+                                </select><!-- chosen-end -->
+                            </div>
+                        </div>
+                        <div class="toolbar-sorter"><span>Sort By</span><select id="sorter" class="sorter-options" data-role="sorter">
+                                <option selected="selected" value="position">Position</option>
+                                <option value="name">Product Name</option>
+                                <option value="price">Price</option>
+                            </select><a href="#"><i class="fa fa-arrow-up"></i></a></div>
+                    </div><!-- tab-area-start -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="list">
+                            {% for v in booklist %}
+                            <div class="single-shop mb-30">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="product-wrapper-2">
+                                            <div class="product-img">
+                                                <a href="{% url 'myhome_bookdetail' v.id %}">
+                                                    <img src="/{{ v.bookimgs_set.first.img_url }}"  alt="book" class="primary" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                        <div class="product-wrapper-content">
+                                            <div class="product-details">
+                                                <div class="product-rating">
+                                                    <ul>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                <h4><a href="{% url 'myhome_bookdetail' v.id %}">{{ v.bookname }}</a></h4>
+                                                <div class="product-price">
+                                                    <ul>
+                                                        <li>¥{{ v.price}}</li>
+                                                    </ul>
+                                                </div>
+                                                <p>{{ v.recommend }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- single-shop-end -->
+                            {% endfor %}
+                        </div>
+                    </div><!-- tab-area-end -->
+                    <!-- pagination-area-start -->
+                    <div class="pagination-area mt-50">
+                        <div class="page-number">
+                            <ul>
+                                {% load pagetag %}
+                                {% PageShow page request %}
+                            </ul>
+                        </div>
+                    </div><!-- pagination-area-end -->
+                </div>
+            </div>
+        </div>
+    </div><!-- shop-main-area-end -->
+{% endblock %}

@@ -1,0 +1,167 @@
+/*----- shop Sidebar start -----*/
+.sidebar-wrapper {
+    .sidebar-single {
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    // responsive
+    @media #{$md-device} {
+        margin-top: 80px;
+    }
+    @media #{$sm-device} {
+        margin-top: 62px;
+    }
+}
+
+.sidebar-single {
+    margin-bottom: 40px;
+    .sidebar-title {
+        position: relative;
+        color: $black-soft;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 1;
+        margin-top: -3px;
+        padding-bottom: 30px;
+        text-transform: capitalize;
+    }
+}
+
+/*------ pricing filter slider start ------*/
+.price-range-wrap {
+    padding-top: 8px;
+    .price-range {
+        border-radius: 0;
+        margin-right: 13px;
+        margin-bottom: 20px;
+        &.ui-widget-content {
+            border: none;
+            background: #eeeeee;
+            height: 6px;
+            border-radius: 20px;
+            .ui-slider-range {
+                background-color: $theme-color;
+                border-radius: 0;
+            }
+            .ui-slider-handle {
+                border: none;
+                background-color: $white;
+                height: 12px;
+                width: 12px;
+                outline: none;
+                cursor: ew-resize;
+                border-radius: 50%;
+                box-shadow: 0 0 5px 0 rgba(0,0,0,0.15);
+                &:before {
+                    top: 50%;
+                    left: 50%;
+                    content: "";
+                    width: 6px;
+                    height: 6px;
+                    position: absolute;
+                    background-color: $theme-color;
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+    }
+    .range-slider {
+        color: $black-soft;
+        margin-top: 30px;
+        .price-input {
+            label {
+                color: $black-soft;
+                margin-bottom: 0;
+            }
+            input {
+                color: $paragraph;
+                border: none;
+                outline: none;
+                max-width: 100px;
+                pointer-events: none
+            }
+        }
+        button {
+            &.filter-btn {
+                border: none;
+                color: $black-soft;
+                font-size: 14px;
+                font-weight: 400;
+                cursor: pointer;
+                text-transform: uppercase;
+                padding: 4px 15px;
+                border-radius: 3px;
+                background-color: #ebebeb;
+                &:hover {
+                    color: $white;
+                    background-color: $theme-color;
+                }
+            }
+        }
+    }
+}
+/*------ pricing filter slider end ------*/
+
+// categories list start
+.categories-list {
+    li {
+        color: $paragraph;
+        margin-bottom: 20px;
+        text-transform: capitalize;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        &:hover {
+            color: $theme-color;
+        }
+    }
+}
+
+/*------ shop categories area start ------*/
+.shop-categories {
+    margin-top: -4px;
+    li {
+        a {
+            color: $paragraph;
+            display: block;
+            padding: 10px 0;
+            line-height: 1;
+            text-transform: capitalize;
+            span {
+                float: right;
+                font-size: 13px;
+                transition: 0.4s;
+            }
+        }
+        &:first-child {
+            a {
+                padding-top: 0;
+            }
+        }
+        &:last-child {
+            a {
+                padding-bottom: 0;
+            }
+        }
+        &:hover {
+            a {
+                color: $theme-color;
+            }
+        }
+    }
+}
+
+/*------ shop categories area end ------*/
+
+.sidebar-banner {
+    img {
+        @media #{$xs-device} {
+            width: 100%;
+        }
+    }
+}
+
+/*----- shop Sidebar end -----*/
+

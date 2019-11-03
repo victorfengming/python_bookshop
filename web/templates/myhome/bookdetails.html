@@ -1,0 +1,318 @@
+{% extends 'myhome/base.html'%}
+{% block title%}
+<title>图书详情页</title>
+{% endblock %}
+{% block con %}
+    <!-- breadcrumbs-area-start -->
+    <div class="breadcrumbs-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="#">首页</a></li>
+                            <li><a href="#" class="active">{{ bookinfo.bookname }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- breadcrumbs-area-end -->
+    <!-- product-main-area-start -->
+    <div class="product-main-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                    <!-- product-main-area-start -->
+                    <div class="product-main-area">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                                <div class="flexslider">
+                                    <ul class="slides">
+                                        {% for i in bookinfo.bookimgs_set.all %}
+                                            <li data-thumb="/{{ i.img_url }}">
+                                                <img src="/{{ i.img_url }}" alt="woman"/>
+                                            </li>
+                                         {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+                                <div class="product-info-main">
+                                    <div class="page-title">
+                                        <h1>{{ bookinfo.bookname }}</h1>
+                                    </div>
+                                    <div class="product-info-stock-sku">
+                                        <span>{{bookinfo.author}}</span>
+                                        <div class="product-attribute">
+                                            <span>{{ bookinfo.publisher}}</span>
+                                            <span class="value">{{bookinfo.pdate|date:'Y-m-d'}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-reviews-summary">
+                                        <div class="rating-summary">
+                                            <a href="#">
+                                                <i class="fa fa-star"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="fa fa-star"></i>
+                                            </a><a href="#">
+                                                <i class="fa fa-star"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="fa fa-star"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="fa fa-star"></i>
+                                            </a>
+                                        </div>
+                                        <div class="reviews-actions">
+                                            <a href="#">3 Reviews</a>
+                                            <a href="#" class="view">
+                                                Add Your Review
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-info-price">
+                                        <div class="price-final">
+                                            <span>¥{{bookinfo.price}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-add-form">
+                                        <form action="">
+                                            <div class="quality-button">
+                                                <input class="qty" name="num" min="1"  type="number" value="1">
+                                                <input type="hidden" name="bid" value="{{ bookinfo.id }}">
+                                            </div>
+                                            <a id="addcart" href="javascript:void(0);">加入购物车</a>
+                                        </form>
+                                    </div>
+                                    <div class="product-social-links">
+                                        <div class="product-addto-links">
+                                            <a href="#">
+                                                <i class="fa fa-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="fa fa-pie-chart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="fa fa-envelope-o"></i>
+                                            </a>
+                                        </div>
+                                        <div class="product-addto-links-text">
+                                            <p>{{ bookinfo.recommend}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- product-main-area-end -->
+                    <!-- product-info-area-start -->
+                    <div class="product-info-area mt-80">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active">
+                                <a href="#Details" data-toggle="tab">商品详情</a>
+                            </li>
+                            <li>
+                                <a href="#Reviews" data-toggle="tab">评论</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="Details">
+                                <div class="valu">
+                                    <p>
+                                            {% autoescape off%}
+                                            {{ bookinfo.bookdetail }}
+                                            {% endautoescape %}
+                                    </p>
+                                    <ul>
+                                        <li><i class="fa fa-circle"></i>国际书号:{{bookinfo.isbn}}</li>
+                                        <li><i class="fa fa-circle"></i>作者:{{ bookinfo.author}}</li>
+                                        <li><i class="fa fa-circle"></i>出版社:{{ bookinfo.publisher }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="Reviews">
+                                <div class="valu valu-2">
+                                    <div class="section-title mb-60 mt-60">
+                                        <h2>Customer Reviews</h2>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="review-title">
+                                                <h3>themes</h3>
+                                            </div>
+                                            <div class="review-left">
+                                                <div class="review-rating"><span>Price</span>
+                                                    <div class="rating-result"><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a></div>
+                                                </div>
+                                                <div class="review-rating"><span>Value</span>
+                                                    <div class="rating-result"><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a></div>
+                                                </div>
+                                                <div class="review-rating"><span>Quality</span>
+                                                    <div class="rating-result"><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a></div>
+                                                </div>
+                                            </div>
+                                            <div class="review-right">
+                                                <div class="review-content">
+                                                    <h4>themes</h4>
+                                                </div>
+                                                <div class="review-details">
+                                                    <p class="review-author">Review by<a href="#">plaza</a></p>
+                                                    <p class="review-date">Posted on <span>12/9/16</span></p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="review-add">
+                                        <h3>You're reviewing:</h3>
+                                        <h4>Joust Duffle Bag</h4>
+                                    </div>
+                                    <div class="review-field-ratings"><span>Your Rating <sup>*</sup></span>
+                                        <div class="control">
+                                            <div class="single-control"><span>Value</span>
+                                                <div class="review-control-vote"><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a></div>
+                                            </div>
+                                            <div class="single-control"><span>Quality</span>
+                                                <div class="review-control-vote"><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a></div>
+                                            </div>
+                                            <div class="single-control"><span>Price</span>
+                                                <div class="review-control-vote"><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a><a href="#"><i class="fa fa-star"></i></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="review-form">
+                                        <div class="single-form"><label>Nickname <sup>*</sup></label>
+                                            <form action="#"><input type="text" /></form>
+                                        </div>
+                                        <div class="single-form single-form-2"><label>Summary <sup>*</sup></label>
+                                            <form action="#"><input type="text" /></form>
+                                        </div>
+                                        <div class="single-form"><label>Review <sup>*</sup></label>
+                                            <form action="#"><textarea name="massage" cols="10" rows="4"></textarea></form>
+                                        </div>
+                                    </div>
+                                    <div class="review-form-button"><a href="#">Submit Review</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- product-info-area-end -->
+                    <!-- new-book-area-start -->
+                    <div class="new-book-area mt-60">
+                        <div class="section-title text-center mb-30">
+                            <h3>推荐图书</h3>
+                        </div>
+                        <div class="tab-active-2 owl-carousel">
+                            <!-- single-product-start -->
+                             {% for i in booklist %}
+                             {% if i.cate == '0' %}
+                            <div class="product-wrapper">
+                                <div class="product-img"><a href="{% url 'myhome_bookdetail' i.id %}"><img src="/{{ i.bookimgs_set.first.img_url }}"  alt="book" class="primary" /></a>
+                                    <div class="product-flag">
+                                        <ul>
+                                            <li><span class="sale">new</span></li>
+                                            <li><span class="discount-percentage">-5%</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-details text-center">
+                                    <div class="product-rating">
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <h4><a href="{% url 'myhome_bookdetail' i.id %}">{{ i.bookname }}</a></h4>
+                                    <div class="product-price">
+                                        <ul>
+                                            <li>¥{{ i.price }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                            </div><!-- single-product-end -->
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div><!-- new-book-area-start -->
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="shop-left">
+                        <div class="left-title mb-20">
+                            <h4>相关图书</h4>
+                        </div>
+                        <div class="random-area mb-30">
+                            <div class="product-active-2 owl-carousel">
+                                <div class="product-total-2">
+                                    {% for i in bookinfo.typeid.all %}
+                                    {% for v in i.books_set.all %}
+                                    <div class="single-most-product bd mb-18">
+                                        <div class="most-product-img"><a href="{% url 'myhome_bookdetail' v.id %}"><img src="/{{ v.bookimgs_set.first.img_url }}"  alt="book" /></a></div>
+                                        <div class="most-product-content">
+                                            <div class="product-rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <h4><a href="{% url 'myhome_bookdetail' v.id %}">{{ v.bookname }}</a></h4>
+                                            <div class="product-price">
+                                                <ul>
+                                                    <li>¥{{ v.price }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- product-main-area-end -->
+{% endblock %}
+{% block js%}
+<script>
+    $("#addcart").click(function(){
+        // 检测当前用户是否登录
+        var uid='{{request.session.AdminUser.id}}'
+        if(uid){
+            // 已经登陆
+            // 获取商品id和数量
+            var data={}
+            data.bookid='{{ bookinfo.id }}'
+            data.num=$(this).parents('form').find('input[name=num]').val()
+            res=/\d+/
+            if(!res.test(data.num)){
+                alert("数量输入错误，请输入有效的数量")
+                $("input[name=num]").val(1)
+                return;
+            }
+            // 发送数据到后台，把数据添加到购物车
+            // 购物车里的信息  
+            // 用户id(只要登录就可以查到用户的id)  
+            // 商品id(根据点击的按钮去找寻商品id)  
+            // 数量(根据点击的按钮去获取用户选择的数量)
+            $.post('{% url "myhome_addcart" %}',data,function(data){
+                  alert(data["msg"])
+            },'json')
+
+        }else{
+            // 没有登陆
+            alert("请先登录")
+            location.href="{% url 'myhome_login' %}?nextpath={{request.path}}"
+        }
+    })
+</script>
+{% endblock%}
+

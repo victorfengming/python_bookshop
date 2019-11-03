@@ -1,0 +1,32 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+#img-box{
+    width: 700px;
+    border:2px dashed #e7e6e6;
+    margin: 0px ;
+    overflow: hidden;
+}
+#img-box .item{
+    width: 180px;height: 180px;
+    margin:5px; 
+    background: url(/static/myadmin/assets/ImgUpRead/a11.png) no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    float: left;
+
+}
+.item input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity:0;
+    filter:alpha(opacity=0);
+    width: 190px;
+    height: 180px;
+    cursor: pointer;
+}
+.item img{
+    display: none;
+}

@@ -1,0 +1,148 @@
+{% extends 'myadmin/base.html' %}
+{% block title%}
+<title>图书信息列表</title>
+{% endblock %}
+{% block con%}
+<div class="row-content am-cf">
+    <div class="row  am-cf">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">图书信息列表</div>
+                        </div>
+                        <div class="widget-body  am-fr">
+
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span><a href="{% url 'myadmin_book_add'%}" style="color: white;">新增</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="">
+                                {% csrf_token%}
+                                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                        <div class="am-form-group tpl-table-list-select">
+                                            <select data-am-selected="{btnSize: 'sm'}" style="display: none;" name="fieldname">
+                                                <option value="all" {% ifequal fieldname 'all' %} selected {% endifequal %}>所有类别</option>
+                                                <option value="bookname"  {% ifequal fieldname 'bookname' %} selected {% endifequal %}>图书名称</option>
+                                                <option value="author"  {% ifequal fieldname 'author' %} selected {% endifequal %}>作者</option>
+                                                <option value="publisher"  {% ifequal fieldname 'homeaddress' %} selected {% endifequal %}>出版社</option>
+                                                <option value="price"  {% ifequal fieldname 'price' %} selected {% endifequal %}>价格</option>
+                                                <option value="num"  {% ifequal fieldname 'usertype' %} selected {% endifequal %}>数量</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                            <label style="display:none;"><span></span><input type="text" name="hidden1" ></label>
+                                            <input name="keywords"  value=" {% if keywords !=  None %} {{ keywords}}  {% endif %} " autocomplete="new-password"   type="text">
+                                            <span class="am-input-group-btn">
+                                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                            </form>
+
+                            <div class="am-u-sm-12">
+                                <table width="100%"  class="am-table am-table-compact am-table-striped tpl-table-black ">
+                                    <thead>
+                                        <tr>
+                                            <th  style="text-align: center;">id</th>
+                                            <th  style="text-align: center;">图书图片</th>
+                                            <th  style="text-align: center;">图书名称</th>
+                                            <th  style="text-align: center;">作者</th>
+                                            <th  style="text-align: center;">出版社</th>
+                                            <th  style="text-align: center;">价格</th>
+                                            <th  style="text-align: center;">国际书号ISBN</th>
+                                            <th  style="text-align: center;">所属分类</th>
+                                            <th  style="text-align: center;">出版时间</th>
+                                            <th  style="text-align: center;">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in booklist %}
+                                        <tr class="gradeX" style="text-align: center;">
+                                            <td class="am-text-middle">
+                                                    {{ i.id }}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'myhome_bookdetail' i.id %}"><img style="width: 70%;" src="/{{ i.bookimgs_set.first.img_url}}"  class="tpl-table-line-img" alt=""></a>
+                                            </td>
+                                            <td class="am-text-middle">{{ i.bookname|slice:":5"  }}</td>
+                                            <td class="am-text-middle">{{i.author}}</td>
+                                            <td class="am-text-middle">
+                                                    {{ i.publisher }}
+                                            </td>
+                                            <td class="am-text-middle">
+                                                    {{ i.price }}
+                                            </td>
+                                            <td class="am-text-middle">
+                                                    {{ i.isbn }}
+                                            </td>
+                                          
+                                            <td class="am-text-middle">
+                                                {% ifequal i.cate '0' %}
+                                                    上架
+                                                {% endifequal %}
+                                                {% ifequal i.cate '1' %}
+                                                    热卖
+                                                {% endifequal %}
+                                                {% ifequal i.cate '2' %}
+                                                    促销
+                                                {% endifequal %}
+                                                {% ifequal i.cate '3' %}
+                                                    推荐
+                                                {% endifequal %}
+                                                {% ifequal i.cate '4' %}
+                                                    下架
+                                                {% endifequal %}
+                                            </td>
+                                            <td class="am-text-middle">
+                                                {{ i.pdate|date:'Y-m-d' }}
+                                            </td>
+                                            <td class="am-text-middle">
+                                                <div class="tpl-table-black-operation">
+                                                    <a href="{% url 'myadmin_book_edit'%}?id={{i.id}}">
+                                                        <i class="am-icon-pencil"></i> 编辑
+                                                    </a>
+                                                    <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        <!-- more data -->
+                                    </tbody>
+                                </table>
+                                <script>
+                                    $(".tpl-table-black-operation-del").click(function(){
+                                        id=$(this).parents("tr").find("td:first").text()
+                                        $this=$(this)
+                                        $.get('{% url "myadmin_book_delete" %}',{'id':id},function(data){
+                                            if(data["code"]==0){
+                                                $this.parents("tr").remove()
+                                            }
+                                            alert(data["msg"])
+                                        },'json')
+                                    })
+                                </script>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                            {% load pagetag %}
+                                            {% PageShow page request %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+{% endblock %}

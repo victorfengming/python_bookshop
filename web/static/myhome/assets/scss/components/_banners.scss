@@ -1,0 +1,124 @@
+/*------ top store style start ------*/
+.banner {
+    &-item {
+        position: relative;
+        &:hover {
+            .banner-thumb {
+                img {
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+    &-thumb {
+        img {
+            width: 100%;
+        }
+    }
+    &-content {
+        top: 50%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        pointer-events: none;
+        transform: translateY(-50%);
+        .text1 {
+            color: $theme-color;
+            padding-bottom: 5px;
+            text-transform: capitalize;
+            font-family: $font-family-special;
+            // responsive
+            @media #{$md-device} {
+                font-size: 26px;
+            }
+        }
+        .text2 {
+            text-transform: capitalize;
+            // responsive
+            @media #{$md-device} {
+                font-size: 18px;
+            }
+            @media #{$sm-device} {
+                font-size: 24px;
+            } 
+        }
+        &-right {
+            left: auto;
+            right: 85px;
+            width: inherit;
+            text-align: left;
+            // responsive
+            @media #{$lg-device, $xs-device} {
+                right: 40px;
+            }
+            @media #{$md-device, $xxs-device} {
+                right: 30px;
+            }
+        }
+        &.banner-text-top {
+            top: 40px;
+            transform: none;
+        }
+    }
+}
+
+.banner-border {
+    position: relative;
+    &:before {
+        top: 25px;
+        bottom: 25px;
+        left: 25px;
+        right: 25px;
+        content: '';
+        z-index: 1;
+        position: absolute;
+        pointer-events: none;
+        border: 1px solid $white;
+        // responsive
+        @media #{$md-device, $sm-device} {
+            top: 15px;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+        }
+    }
+}
+
+.banner-content-shape {
+    width: 60%;
+    margin: auto;
+    padding: 23px 20px;
+    background-color: rgba($white, 0.7);
+    // responsive
+    @media #{$md-device, $xxs-device} {
+        width: 80%;
+    }
+    p {
+        color: $black-soft;
+        padding-bottom: 7px;
+        text-transform: uppercase;
+    }
+    h4 {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1.2;
+        color: $black-soft;
+        text-transform: uppercase;
+        font-family: $font-family-heading;
+    }
+}
+/*------ top store style end ------*/
+.banner-statistics-right  {
+    [class*="col-"] {
+        // responsive
+        @media #{$sm-device} {
+            margin-bottom: 30px;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+/*------- static middle store1 start -------*/

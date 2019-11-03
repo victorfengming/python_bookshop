@@ -1,0 +1,63 @@
+{% extends 'myadmin/base.html' %}
+{% block title%}
+<title>分类添加</title>
+{% endblock %}
+{% block con%}
+<div class="row-content am-cf">
+    <div class="row  am-cf">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title am-fl">分类添加表单</div>
+                            <div class="widget-function am-fr">
+                                <a href="javascript:;" class="am-icon-cog"></a>
+                            </div>
+                        </div>
+                        <div class="widget-body am-fr">
+                            <form class="am-form  tpl-form-border-form tpl-form-border-br" action="{% url 'myadmin_type_insert' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="am-form-group">
+                                    <label for="phone" class="am-u-sm-3 am-form-label">*所属分类:</label>
+                                    <div class="am-u-sm-9">
+                                        <select data-am-selected="{btnSize: 'sm'}" style="display: none;" name="pid">
+                                            <option value="0">顶级分类</option>
+                                            {% for i in typelist %}
+                                            <option value="{{ i.id }}">{{ i.sj}}{{i.catename}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="nickname" class="am-u-sm-3 am-form-label">*分类名:</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" class="tpl-form-input" required name="catename" id="nickname" placeholder="请起一个响亮的分类名">
+                                    </div>
+                                </div> 
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-9 am-u-sm-push-3">
+                                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                    </div>
+                                </div>
+                                <script src="/static/myadmin/assets/js/jquery-1.12.4.min.js"></script>
+                                <script src="/static/myadmin/assets/js/bootstrap.min.js"></script>
+                                <script>
+
+                                        $('input[name=face]').change(function(){
+                                            var file = this.files[0]
+                                            var reader = new FileReader(); 
+                                            reader.readAsDataURL(file); 
+                                            console.log(reader)
+                                            reader.onload=function(e){ 
+                                                console.log($('.readimg').attr('src',this.result))
+                                            } 
+                                        })
+                                </script>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+{% endblock %}
+
+

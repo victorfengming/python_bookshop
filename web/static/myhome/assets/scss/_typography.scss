@@ -1,0 +1,634 @@
+/*------ Typography Style Start ------*/
+
+body {
+    font-size: $font-size-base;
+    line-height: 1.8;
+    font-weight: 400;
+    font-family: $font-family-base;
+    color: $paragraph;
+}
+
+a {
+    transition: 0.4s;
+
+    &:hover,
+    &:focus {
+        color: $theme-color;
+        outline: none;
+        text-decoration: none;
+    }
+}
+
+p {
+    margin-bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: $black-soft;
+    font-weight: 500;
+    margin: 0;
+}
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    line-height: inherit;
+}
+h1, .h1 {
+    font-size: 36px;
+}
+h2, .h2 {
+    font-size: 30px;
+}
+h3, .h3 {
+    font-size: 24px;
+}
+h4, .h4 {
+    font-size: 18px;
+}
+h5, .h5 {
+    font-size: 16px;
+}
+h6, .h6 {
+    font-size: 14px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+        list-style: none;
+    }
+}
+
+strong,
+b {
+    font-weight: 700;
+}
+
+figure {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    transition: 0.4s;
+}
+
+.bg-img {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.btn,
+button {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    box-shadow: none;
+    transition: 0.4s;
+    background-color: transparent;
+
+    &:active,
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+input,
+textarea {
+    &:focus {
+        outline: none;
+    }
+}
+
+// Fieldset Style;
+fieldset {
+    margin-top: 30px;
+
+    legend {
+        border-bottom: 1px solid #e7e7e7;
+        color: $black;
+        font-size: 24px;
+        padding-bottom: 10px;
+        text-transform: capitalize;
+    }
+}
+
+// Selection Style
+::-moz-selection {
+    color: $white;
+    background: #91b2c3;
+}
+
+::selection {
+    color: $white;
+    background: #91b2c3;
+}
+
+// placeholder text style
+::placeholder {
+    color: #999;
+    font-size: 13px;
+    opacity: 1;
+}
+
+
+// modal fix
+.modal-dialog {
+    max-width: 1000px;
+
+    // responsive
+    @media #{$lg-device} {
+        max-width: 800px;
+    }
+
+    @media #{$md-device} {
+        max-width: 700px;
+    }
+}
+
+.modal {
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: -99;
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: visible;
+        z-index: 99999999;
+        -webkit-animation: slideInDown 0.4s forwards;
+        animation: slideInDown 0.4s forwards;
+    }
+
+    .modal-header {
+        padding: 0 10px;
+        border-bottom: none;
+
+        .close {
+            color: $black-soft;
+            font-size: 34px;
+            opacity: 1;
+            display: block;
+            position: absolute;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            margin: 0;
+            right: 10px;
+            top: 10px;
+            font-weight: 500;
+            z-index: 999;
+            line-height: 30px;
+            border-radius: 50%;
+        }
+    }
+
+    .modal-body {
+        padding: 20px 20px 20px 20px;
+
+        @media #{$xxs-device} {
+            padding: 10px;
+        }
+    }
+}
+
+/* ----tab problem fix css ----*/
+.tab-content {
+    .tab-pane {
+        display: block;
+        height: 0;
+        max-width: 100%;
+        opacity: 0;
+        overflow: hidden;
+        visibility: hidden;
+
+        &.active {
+            height: auto;
+            opacity: 1;
+            overflow: visible;
+            visibility: visible;
+        }
+    }
+}
+
+/*------ custom tooltip start -------*/
+.tooltip {
+    &.show {
+        opacity: 1;
+    }
+
+    &>.tooltip-inner {
+        font-size: 13px;
+        color: $white;
+        background-color: $theme-color;
+    }
+
+    &.bs-tooltip-top {
+        .arrow {
+            &:before {
+                border-top-color: $theme-color;
+            }
+        }
+    }
+
+    &.bs-tooltip-left {
+        .arrow {
+            &:before {
+                border-left-color: $theme-color;
+            }
+        }
+    }
+}
+
+/*------ custom tooltip end -------*/
+
+/* ---- Sick Slider arrow style start ----*/
+
+.slick-slider {
+    .slick-slide>div>div {
+        vertical-align: middle;
+    }
+}
+
+
+// slick arrow style
+.slick-arrow-style {
+    button {
+        &.slick-arrow {
+            top: 50%;
+            left: 0;
+            height: 40px;
+            width: 40px;
+            color: $black-soft;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            display: block;
+            position: absolute;
+            transform: translateY(-50%) scale(0.7);
+            line-height: 40px;
+            border-radius: 3px;
+            z-index: 1;
+            background-color: rgba(240, 240, 240, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s;
+
+            &.slick-next {
+                left: auto;
+                right: 0;
+                padding-left: 2px;
+            }
+
+            &:hover {
+                color: $white;
+                background-color: $theme-color;
+            }
+        }
+    }
+
+    &:hover {
+        button {
+            &.slick-arrow {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(-50%) scale(1);
+            }
+        }
+    }
+
+    &_hero {
+        button {
+            &.slick-arrow {
+                font-size: 40px;
+                left: 15px;
+                width: inherit;
+                height: inherit;
+                background-color: transparent;
+
+                &.slick-next {
+                    right: 15px;
+                }
+
+                &:hover {
+                    color: $theme-color;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
+
+// slick append style
+.slick-append {
+    background-color: $white;
+    z-index: 2;
+    padding-left: 5px;
+    button {
+        position: inherit;
+        display: inline-block;
+        background-color: transparent;
+        color: $paragraph;
+
+        &.slick-next {
+            margin-left: 10px;
+        }
+
+        &:hover {
+            color: $theme-color;
+        }
+    }
+}
+
+
+/*--------- slick slider dot style start -------*/
+.slick-dot-style {
+    ul {
+        &.slick-dots {
+            bottom: 15px;
+            left: 50%;
+            position: absolute;
+            transform: translateX(-50%);
+
+            li {
+                display: inline-block;
+                margin-right: 10px;
+                &:last-child {
+                    margin-right: 0;
+                }
+                button {
+                    width: 7px;
+                    height: 7px;
+                    padding: 0;
+                    border: none;
+                    display: block;
+                    text-indent: -5000px;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    transition: 0.4s;
+                    background-color: $paragraph;
+                }
+
+                &.slick-active button {
+                    width: 10px;
+                    height: 10px;
+                    background-color: $theme-color;
+                }
+            }
+        }
+    }
+}
+
+// Slick Slider Gutters
+@for $i from 3 through 15 {
+    &.slick-row-#{1 * $i} {
+        .slick-list {
+            margin: 0 #{-1px * $i};
+
+            .slick-slide {
+                margin: 0 #{1px * $i};
+            }
+        }
+    }
+
+    @media #{$sm-device} {
+        &.slick-sm-row-#{1 * $i} {
+            .slick-list {
+                margin: 0 #{-1px * $i} !important;
+
+                .slick-slide {
+                    margin: 0 #{1px * $i} !important;
+                }
+            }
+        }
+    }
+}
+
+.slick-slider {
+    .slick-slide> {
+        div {
+            margin-bottom: 37px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+
+// custom container size
+.container {
+    @media #{$xl-device} {
+        max-width: 1200px;
+    }
+
+    @media #{$sm-device} {
+        max-width: 540px;
+    }
+
+    @media #{$xs-device} {
+        max-width: 450px;
+    }
+}
+
+.common-wrapper {
+    max-width: 1250px;
+    margin: auto;
+    padding: 40px 0;
+    background-color: $white;
+    // responsive
+    @media #{$sm-device} {
+        padding: 35px 0 62px 0;
+    }
+    @media #{$xxs-device} {
+        padding: 15px 0 62px 0;
+    }
+}
+
+// short classes
+.bdr-bottom {
+    border-bottom: 1px solid $bdr-color;
+}
+
+.common-bg {
+    background-color: #f6f6f6;
+}
+
+.theme-color {
+    background-color: $theme-color;
+}
+
+.bg-gray {
+    background-color: #f2f2f2;
+}
+
+.bg-gray-2 {
+    background-color: #f6f7f9;
+}
+
+.bg-blue {
+    background-color: #3a78ff;
+}
+
+.bg-dark {
+    background-color: $bg-dark !important;
+}
+
+.theme-color {
+    background-color: $theme-color;
+}
+
+.bg-black {
+    background-color: $black-soft;
+}
+
+.facebook {
+    background-color: $facebook;
+}
+
+.twitter {
+    background-color: $twitter;
+}
+
+.google {
+    background-color: $google-plus;
+}
+
+.instagram {
+    background-color: $instagram;
+}
+
+.youtube {
+    background-color: $youtube;
+}
+
+
+/* ----scroll to top css start ----*/
+.scroll-top {
+    bottom: 50px;
+    cursor: pointer;
+    height: 50px;
+    position: fixed;
+    right: 20px;
+    text-align: center;
+    width: 50px;
+    z-index: 9999;
+    transition: 0.4s;
+    border-radius: 50%;
+    background-color: $theme-color;
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+
+    i {
+        line-height: 50px;
+        color: #fff;
+        font-size: 25px;
+    }
+
+    &.not-visible {
+        bottom: -50px;
+        visibility: hidden;
+        opacity: 0;
+    }
+    &:hover {
+        background-color: $black-soft;
+    }
+}
+/* ----scroll to top css end ----*/
+
+/*-------- Custom Checkbox Style start --------*/
+.custom-checkbox,
+.custom-radio {
+
+    &.custom-control {
+        min-height: auto;
+    }
+
+    label,
+    .custom-control-label {
+        font-size: 14px;
+        line-height: 1;
+        padding-left: 10px;
+        font-weight: 400;
+        display: block;
+        cursor: pointer;
+
+        &:before {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            border-radius: 0;
+            height: 15px;
+            top: 0;
+            width: 15px;
+        }
+
+        &:after {
+            background-size: 10px 10px;
+            height: 15px;
+            top: 0;
+        }
+
+        a {
+            color: $black-soft;
+            font-weight: 500;
+
+            &:hover {
+                color: $theme-color;
+            }
+        }
+    }
+
+    input,
+    .custom-control-input {
+        outline: none;
+
+        &:focus {
+
+            ~.custom-control-label,
+            label {
+                &:before {
+                    box-shadow: none;
+                }
+            }
+        }
+
+        &:checked {
+
+            ~.custom-control-label,
+            label {
+                &:before {
+                    background-color: $theme-color;
+                    border-color: $theme-color;
+                }
+            }
+        }
+    }
+}
+/*-------- Custom Checkbox Style end --------*/
+
+/*------- Custom Radio Button Style start -------*/
+.custom-radio {
+    label,
+    .custom-control-label {
+        &:before {
+            border-radius: 50%;
+            height: 14px;
+            width: 14px;
+        }
+
+        &::after {
+            background-size: 10px 10px;
+            left: -22px;
+            top: 2px;
+            height: 10px;
+            width: 10px;
+        }
+    }
+}
+/*------- Custom Radio Button Style end -------*/
+

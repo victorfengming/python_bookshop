@@ -1,0 +1,150 @@
+{% extends 'myadmin/base.html' %}
+{% block title%}
+<title>图书信息添加</title>
+{% endblock %}
+{% block con%}
+<div class="row-content am-cf">
+    <div class="row  am-cf">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title am-fl">图书信息添加表单</div>
+                            <div class="widget-function am-fr">
+                                <a href="javascript:;" class="am-icon-cog"></a>
+                            </div>
+                        </div>
+                        <div class="widget-body am-fr">
+                            <form class="am-form  tpl-form-border-form tpl-form-border-br" action="{% url 'myadmin_book_update' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ bookinfo.id}}">
+                                <div class="am-form-group">
+                                    <label for="bookname" class="am-u-sm-3 am-form-label">*图书名称:</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" class="tpl-form-input"   required name="bookname" value="{{ bookinfo.bookname}}" id="bookname" placeholder="请输入书籍名称">
+                                    </div>
+                                </div>
+  
+                                <div class="am-form-group">
+                                        <label for="author" class="am-u-sm-3 am-form-label">*作者:</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" class="tpl-form-input" name="author" value="{{ bookinfo.author }}" id="author" placeholder="请输入作者名称">
+                                        </div>
+                                </div>
+                                <div class="am-form-group">
+                                        <label for="publisher" class="am-u-sm-3 am-form-label">*出版社:</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" class="tpl-form-input" name="publisher" value="{{ bookinfo.publisher }}" id="publisher" placeholder="请输入出版社名称">
+                                        </div>
+                                </div>
+                                <div class="am-form-group">
+                                        <label for="pdate" class="am-u-sm-3 am-form-label">*出版时间:</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="date" class="tpl-form-input" name="pdate" value="{{ bookinfo.pdate|date:'Y-m-d' }}" id="pdate" placeholder="请输入出版时间">
+                                        </div>
+                                </div>
+                                <div class="am-form-group">
+                                        <label for="price" class="am-u-sm-3 am-form-label">*售价:</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" class="tpl-form-input" min="1" max="999"  step="0.01" name="price" value="{{ bookinfo.price }}" id="price" placeholder="请输入图书售出价格">
+                                        </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="num" class="am-u-sm-3 am-form-label">*库存数量:</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="number" class="tpl-form-input" min="1" max="999"  step="1" name="num" id="num" value="{{ bookinfo.num }}" placeholder="请输入图书售出价格">
+                                    </div>
+                            </div>
+                                <div class="am-form-group">
+                                        <label for="isbn" class="am-u-sm-3 am-form-label">*国际书号ISBN:</label>
+                                        
+                                        <div class="am-u-sm-9">
+                                            <input type="text" class="tpl-form-input" name="isbn" value="{{ bookinfo.isbn }}" id="isbn" placeholder="请输入国际书号ISBN">
+                                        </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="recommend" class="am-u-sm-3 am-form-label">推荐语:</label>
+                                    <div class="am-u-sm-9">
+                                        <textarea name="recommend" rows="10" id="recommend" placeholder="请输如推荐的信息">{{ bookinfo.recommend}}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label for="user-name" class="am-u-sm-3 am-form-label">商品详情:</label>
+                                    <div class="am-u-sm-9">
+                                        <script id="bookdetail" name="bookdetail" type="text/plain" style="height:500px;color: #666;">{{bookinfo.bookdetail}}</script>
+                                    </div>
+                                </div>
+                                <link rel="stylesheet" type="text/css" href="/ueditor/UE/third-party/SyntaxHighlighter/shCoreDefault.css">
+                                <script type="text/javascript" src="/ueditor/UE/third-party/SyntaxHighlighter/shCore.js"></script>
+                                <script type="text/javascript" src="/ueditor/UE/ueditor.config.js"></script>
+                                <script type="text/javascript" src="/ueditor/UE/ueditor.all.min.js"></script>
+                                <script type="text/javascript" src="/ueditor/UE/lang/zh-cn/zh-cn.js"></script>
+                                <script type="text/javascript">
+                                    var ue = UE.getEditor('bookdetail');
+                                    SyntaxHighlighter.all();
+                                </script>
+                              
+                                <div class="am-form-group">
+                                        <label for="cate" class="am-u-sm-3 am-form-label">所属类别:</label>
+                                        <div class="am-u-sm-9">
+                                            <label class="am-radio-inline">
+                                                <input type="radio" name="cate" value="0" {% if bookinfo.cate ==  '0' %} checked{% endif %}>上架 
+                                            </label>
+                                            <label class="am-radio-inline">
+                                                <input type="radio" name="cate" value="1" {% if bookinfo.cate ==  '1' %} checked{% endif %}>热卖
+                                            </label>
+                                            <label class="am-radio-inline">
+                                                <input type="radio" name="cate" value="2" {% if bookinfo.cate ==  '2' %} checked{% endif %}>促销
+                                            </label>
+                                            <label class="am-radio-inline">
+                                                <input type="radio" name="cate" value="3" {% if bookinfo.cate ==  '3' %} checked{% endif %}>推荐
+                                            </label>
+                                            <label class="am-radio-inline">
+                                                <input type="radio" name="cate" value="4" {% if bookinfo.cate ==  '4' %} checked{% endif %}>下架
+                                            </label>
+                                        </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label for="img_url" class="am-u-sm-3 am-form-label">商品图片:</label>
+                                    <div class="am-u-sm-9">
+                                        <div class="am-form-group am-form-file">
+                                            <div>
+                                                <img class="readimg" style="max-width:200px;" src="/{{ bookinfo.bookimgs_set.first.img_url}}" alt="">
+                                            </div>
+                                            <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                            <i class="am-icon-cloud-upload"></i>请选择头像</button>
+                                            <input id="img_url" type="file"  name="img_url">
+                                            <input type="hidden"  value="{{ bookinfo.bookimgs_set.first.img_url}}"  name="old_img_url">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-9 am-u-sm-push-3">
+                                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                    </div>
+                                </div>
+                                <script src="/static/myadmin/assets/js/jquery-1.12.4.min.js"></script>
+                                <script src="/static/myadmin/assets/js/bootstrap.min.js"></script>
+                                <script>
+
+                                        $('input[name=img_url]').change(function(){
+                                            var file = this.files[0]
+                                            var reader = new FileReader(); 
+                                            reader.readAsDataURL(file); 
+                                            console.log(reader)
+                                            reader.onload=function(e){ 
+                                                console.log($('.readimg').attr('src',this.result))
+                                            } 
+                                        })
+                                </script>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+{% endblock %}
+
+

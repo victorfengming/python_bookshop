@@ -1,0 +1,437 @@
+/*----------- header top area start -----------*/
+.header-top {
+    padding: 10px 0;
+}
+.header-top-settings {
+    ul {
+        li {
+            color: $paragraph;
+            cursor: pointer;
+            font-size: 12px;
+            position: relative;
+            margin-left: 40px;
+            position: relative;
+            margin-left: 20px;
+            padding-left: 20px;
+            &:before {
+                top: 50%;
+                left: 0;
+                width: 1px;
+                height: 15px;
+                content: "";
+                position: absolute;
+                background-color: $bdr-color;
+                transform: translateY(-50%);
+            }
+            &:first-child {
+                padding-left: 0;
+                margin-left: 0;
+                &:before {
+                    display: none;
+                }
+            }
+            span {
+                cursor: auto;
+                font-size: 13px;
+                text-transform: capitalize;
+            }
+
+            .dropdown-list {
+                top: 100%;
+                right: 0;
+                position: absolute;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(30px);
+                transition: 0.4s;
+                padding: 15px 15px 20px;
+                width: 150px;
+                z-index: 9;
+                text-align: left;
+                background-color: $white;
+                pointer-events: none;
+                border: 1px solid $bdr-color;
+
+                li {
+                    margin-left: 0;
+                    padding: 0;
+
+                    a {
+                        color: $paragraph;
+                        font-size: 13px;
+                        display: block;
+                        padding: 5px 0 3px;
+                        text-transform: capitalize;
+
+                        &:hover {
+                            color: $theme-color;
+                        }
+                        img {
+                            vertical-align: inherit;
+                        }
+                    }
+                    &:before {
+                        display: none;
+                    }
+                }
+
+            }
+
+            &:hover {
+                .dropdown-list {
+                    opacity: 1;
+                    visibility: visible;
+                    pointer-events: visible;
+                    transform: translateY(0);
+                }
+            }
+        }
+    }
+}
+.welcome-message{
+    p {
+        color: $paragraph;
+        font-size: 13px;
+        line-height: 1;
+    }
+}
+/*----------- header top area end -----------*/
+
+/*------- header main area start -------*/
+/*---------- header mini cart start ----------*/
+.header-configure-area {
+    padding-right: 10px;
+    ul {
+        li {
+            display: inline-block;
+            margin-left: 25px;
+            line-height: 1;
+            a {
+                font-size: 20px;
+                line-height: 1;
+                color: $black-soft;
+                position: relative;
+                .notification {
+                    top: -10px;
+                    right: -8px;
+                    position: absolute;
+                    width: 18px;
+                    height: 18px;
+                    text-align: center;
+                    line-height: 18px;
+                    font-size: 10px;
+                    color: $white;
+                    border-radius: 50%;
+                    background-color: $theme-color;
+                }
+                &:hover {
+                    color: $theme-color;
+                }
+            }
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &.user-hover {
+                position: relative;
+                .dropdown-list {
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    width: 150px;
+                    padding: 20px;
+                    background-color: $white;
+                    z-index: 11;
+                    transform: translateY(30px);
+                    transition: 0.4s;
+                    opacity: 0;
+                    visibility: hidden;
+                    border: 1px solid $bdr-color;
+                    li {
+                        display: block;
+                        margin-left: 0;
+                        a {
+                            color: $paragraph;
+                            font-size: 13px;
+                            line-height: 1;
+                            display: block;
+                            padding: 8px 0;
+                            text-transform: capitalize;
+                            &:hover {
+                                color: $theme-color;
+                            }
+                        }
+                    }
+                }
+                &:hover {
+                    .dropdown-list {
+                        opacity: 1;
+                        visibility: visible;
+                        transform: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*----------- header settinngs area end -----------*/
+
+/*---------- main menu style start ---------*/
+// menu navigation bar
+.main-menu {
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        li {
+            position: relative;
+            &.static {
+                position: static;
+            }
+            a {
+                color: $black-soft;
+                font-size: 14px;
+                padding: 40px 15px;
+                font-weight: 500;
+                display: block;
+                text-transform: uppercase;
+                border-radius: 5px;
+                font-family: $font-family-heading;
+                i {
+                    font-size: 14px;
+                    padding: 0 3px;
+                }
+            }
+            &:first-child {
+                a {
+                    padding-left: 0;
+                }
+            }
+
+            &:hover>,
+            &.active> {
+                a {
+                    color: $theme-color;
+                }
+            }
+
+            ul {
+
+                // dropdown menu
+                &.dropdown {
+                    top: 100%;
+                    left: 0;
+                    width: 220px;
+                    position: absolute;
+                    transition: 0.4s;
+                    background-color: $white;
+                    opacity: 0;
+                    visibility: hidden;
+                    z-index: 99999;
+                    padding: 20px 0;
+                    pointer-events: none;
+                    transform: translateY(20px);
+                    border: 1px solid $bdr-color;
+
+                    li {
+                        margin-right: 0;
+                        border-right: none;
+                        flex-basis: 100%;
+                        padding: 0;
+
+                        a {
+                            color: $paragraph;
+                            font-size: 14px;
+                            font-weight: 400;
+                            padding: 5px 15px;
+                            text-transform: capitalize;
+
+                            i {
+                                float: right;
+                                padding-top: 5px;
+                            }
+                        }
+
+                        &:hover> {
+                            a {
+                                color: $theme-color;
+                                background-color: $white;
+                            }
+                        }
+
+                        ul {
+                            &.dropdown {
+                                top: 100%;
+                                left: 100%;
+                                position: absolute;
+                                width: 250px;
+                                opacity: 0;
+                                visibility: hidden;
+                            }
+                        }
+
+                        &:hover {
+                            ul {
+                                &.dropdown {
+                                    top: 0;
+                                    opacity: 1;
+                                    visibility: visible;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // mega menu
+                &.megamenu {
+                    width: calc(100% - 30px);
+                    padding: 20px;
+                    border: 1px solid $bdr-color;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                    li {
+                        flex-basis: 25%;
+
+                        &.mega-title> {
+                            a {
+                                color: $black-soft;
+                                font-size: 16px;
+                                font-weight: 500;
+                            }
+                        }
+
+                        ul {
+                            li {
+                                flex-basis: 100%;
+                            }
+                        }
+
+                        &:hover> {
+                            a {
+                                color: $theme-color;
+                            }
+                        }
+                        &.megamenu-banners {
+                            flex-basis: 100%;
+                            margin-top: 25px;
+                            padding-bottom: 10px;
+                            position: relative;
+                            &:before {
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                content: "";
+                                position: absolute;
+                                pointer-events: none;
+                                background-color: rgba(255,255,255,.4);
+                                opacity: 0;
+                                visibility: hidden;
+                                transition: 0.4s;
+                            }
+                            &:hover {
+                                &:before {
+                                    opacity: 1;
+                                    visibility: visible;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &:hover {
+                ul {
+                    &.dropdown {
+                        opacity: 1;
+                        visibility: visible;
+                        pointer-events: visible;
+                        transform: translate(0);
+                    }
+
+                    &.megamenu {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*---- header style 2 start ----*/
+.header-transparent {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
+.header-middle-inner {
+    padding: 30px 0;
+}
+
+
+.header-search-box {
+    width: 250px;
+    position: relative;
+    border-bottom: 1px solid $bdr-color;
+    .header-search-field {
+        width: 100%;
+        padding: 5px 25px 5px 0;
+        border: none;
+        background-color: transparent;
+    }
+    .header-serch-btn {
+        top: 50%;
+        right: 0;
+        font-size: 18px;
+        line-height: 1;
+        position: absolute;
+        transform: translateY(-50%);
+        &:hover {
+            color: $theme-color;
+        }
+    }
+}
+
+/*---------- main menu style end ---------*/
+
+/*------ sticky menu style start ------*/
+.sticky {
+    &.is-sticky {
+        top: 0;
+        position: fixed;
+        width: 100%;
+        z-index: 9;
+        background-color: $white;
+        box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.2);
+        animation: 900ms cubic-bezier(0.2, 1, 0.22, 1) 0s normal none 1 running fadeInDown;
+        .main-menu {
+            li {
+                a {
+                    padding: 20px 15px;
+                }
+                .dropdown {
+                    li {
+                        a {
+                            padding: 5px 15px;
+                        }
+                    }
+                }
+                &:first-child {
+                    a {
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*------ sticky menu style end ------*/
+
