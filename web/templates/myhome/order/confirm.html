@@ -185,10 +185,11 @@
         }
         data["address"]=$("input[name=address]").val()
         $.get("{% url 'myhome_address_add' %}",data,function(sdata){
-                 if(sdata["code"] =='0'){
+            console.log(sdata)
+                 if(!sdata["code"]){
                     window.location.reload();//刷新当前页面
                  }else{
-                    alert(data["msg"])
+                    alert(sdata["msg"])
                  }
         },'json')
     })
@@ -229,29 +230,21 @@
         }else{
             data["addressid"]=res
             data["cartids"]=$("input[name=cartids]").val()
+            console.log(data["addressid"])
+            console.log(data["cartids"])
                 $.post('{% url "myhome_order_create"%}',data,function(data){
                 if(!data["code"]){
                     id=data["orderid"]
-                    window.location.reload()
-                    $(".your-order-table").find("tbody").remove()
-                    $(".order-total").find("tfoot").remove()
                     url="{% url 'myhome_order_pay'%}?id="+id
-                    location.href=url
-                    console.log(data)
+                    // 该方法通过指定url替换当前缓存在历史里（客户端）的项目，
+                    // 因此当使用replace方法后，你不能通过前进和后退来访问已经被替换的url
+                    location.replace(url)
                 }else{
                     alert(data["msg"])
                 }
-            },'json')
-            
-            
+            },'json') 
         }
    })
-
-var cartlist='{{ cartlist }}'
-console.log(cartlist)
-// if($(".your-order-table").find("tbody").length==1){
-//     location.href='{% url "myhome_cartindex" %}'
-// }
 
 
 

@@ -72,9 +72,9 @@ def sendphone(request):
 def SendCode(phone,vcode):
 	url = 'https://open.ucpaas.com/ol/sms/sendsms'
 	data = {
-			'sid':'29f56d005f2a749cf663321f87a71126',
-			'token':'5bdb044ffa83fe4d729092f9608195bd',
-			'appid':'14fe168e67164e739d56faa071986919',
+			'sid':'4c0064b5f77af9da37fb74145594092e',
+			'token':'1db32087f3b4111610f753a4ded823c1',
+			'appid':'328129a7423b4bf595bc4435e80f8e1c',
 			'templateid':'510851',
 			'param':vcode,
 			'mobile':phone

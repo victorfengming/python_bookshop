@@ -1,8 +1,9 @@
 {% extends 'myhome/base.html'%}
 {% block title %}
 <title>购物车页面</title>
-<meta http-equiv="refresh">
+<meta http-equiv="refresh" >
 {% endblock %}
+
 {%block con%}
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-70">
@@ -66,7 +67,7 @@
                                         ¥<span class="amount">{{ i.bookid.price}}</span>
                                     </td>
                                     <td class="product-quantity">
-                                        <input id="num" type="number" min=1 value="{{ i.num}}">
+                                        <input name="num" type="number" min=1 value="{{ i.num}}">
                                         <input name="bookid" type="hidden" value="{{ i.bookid.id }}">
                                     </td>
                                     {% load pagetag %}
@@ -128,26 +129,30 @@
     //   当商品数量发生变化时，计算小计的值
     // 也就是当数量的input的框失去焦点时，去计算小计的值
     // 如果当数量的框发生变化时，就去变化，服务器会瘫痪
-    $("#num").blur(function(){
+ 
+    $("input[name=num]").blur(function(){
+        $this=$(this)
+        $("input[name=checkbox]").prop('checked',false)
+        $(".cart-subtotal span").text(0.00)
+        $(".order-total span").text(0.00)
         data={}
         xj=0
         data["num"]=$(this).val()
         res=/\d+/
-        console.log('qwqqwweqww')
-        if(!res.test(data["num"])){
+        if(data["num"]<=0){
             alert("数量改变错误,请更新正确的数量");
             $(this).val(1)
             return;
         }
         data["num"]=parseInt(data["num"])
         data["bookid"]=$(this).next().val()
-        price=parseFloat($(".product-price").find("span").text())
+        price=parseFloat($(this).parents("tr").find(".product-price").find("span").text())
         $.get('{% url "myhome_modicart" %}',data,function(sdata){
             if(sdata["code"]){
                 alert(sdata["msg"])
             }else{
                 xj=parseFloat(data["num"]*price).toFixed(2)
-                $(".product-subtotal").find("span").text(xj)
+                $this.parents("tr").find(".product-subtotal").find("span").text(xj)
             }
         },'json')
     })
@@ -200,7 +205,8 @@
         $(".order-total span").text(total)
         return cartids
     }
-    
+
+
     $("#addorder").click(function(){
         var res=Totalprice()
         if (res.length){
@@ -208,8 +214,6 @@
         }else{
             alert("请先选择需要购买的产品")
         }
-    })
-    
-   
+    })      
 </script>
 {% endblock %}

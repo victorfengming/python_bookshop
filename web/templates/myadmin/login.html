@@ -66,7 +66,7 @@
                     <div class="am-form-group" id="yz">
                         <input type="text" name="code" class="tpl-form-input"  placeholder="验证码">
                         <!-- 一张图片只能加载一次     让他的值不等可以改变属性的值   采用随机数的方式让每次加载的文件长度可保持一致-->
-                        <img src="http://2x748f8421.qicp.vip/myadmin/yzm" alt="" onclick="this.src='{% url "myadmin_yzm" %}?'+Math.random()">
+                        <img src="http://127.0.0.1:8000/myadmin/yzm" alt="" onclick="this.src='{% url "myadmin_yzm" %}?'+Math.random()">
                     </div>
                     <div class="am-form-group tpl-login-remember-me">
                         <input id="remember-me" type="checkbox">

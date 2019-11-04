@@ -7,12 +7,14 @@ from .IndexViews import typecom
 from web import settings
 # Create your views here.
 
+from django.views.decorators.cache import never_cache 
 #订单结算页
+@never_cache
 def confirm(request):
     cartids=request.GET.get("cartids",'').split(',')
     cartids=[int(i) for i in cartids]
     data=models.Cart.objects.filter(id__in=cartids)
-    userobj=models.Users.objects.get(id=request.session["AdminUser"]["id"])
+    userobj=models.Users.objects.get(id=request.session["User"]["id"])
     addresslist=userobj.address_set.all()
     context={'typelist':typecom(),'cartlist':data,'addresslist':addresslist,}
     return render(request,'myhome/order/confirm.html',context)
@@ -46,7 +48,7 @@ def create(request):
         totalprice+=i.num*i.bookid.price
     # 创建订单
     orderdata={
-        'uid':models.Users.objects.get(id=request.session["AdminUser"]["id"]),
+        'uid':models.Users.objects.get(id=request.session["User"]["id"]),
         'username':data["name"],
         'phone':data["phone"],
         'address':data["address"],

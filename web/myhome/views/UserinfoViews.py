@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from myadmin import models
 import random,time,os
 from .IndexViews import typecom,usercom
-
+import re
 # Create your views here.
 
 def index(request):
@@ -16,12 +16,12 @@ def modiuser(request):
     data.pop("csrfmiddlewaretoken")
     #头像  昵称 手机号  性别  身份  密码
     #获取头像
-    userobj=models.Users.objects.get(id=request.session["AdminUser"]["id"])
+    userobj=models.Users.objects.get(id=request.session["User"]["id"])
     try:
         filename=imgupload(request)
         if filename:
             url='.'+data["old_face"]
-            os.remove(url)
+            # os.remove(url)
             data["face"]=filename
         else:
             data["face"]=data["old_face"]
@@ -30,15 +30,17 @@ def modiuser(request):
             if not check_password(data["old_password"],userobj.password):
                 return HttpResponse("<script>alert('密码错误');history.back()</script>")
             else:
+                if not re.findall('\d{6}',data['password']):
+                    return HttpResponse("<script>alert('请输入有效的密码');history.back()</script>")
                 if data["password"]!=data["confirm_password"]:
                     return HttpResponse("<script>alert('新密码与确认密码不一致');history.back()</script>")
                 else:
                     data['password']= make_password(data['password'], None, 'pbkdf2_sha256')
+                    data.pop("old_password")
+                    data.pop("confirm_password")
         else:
             data["password"]=userobj.password
-        data.pop("old_password")
-        data.pop("confirm_password")
-        obj=models.Users.objects.filter(id=request.session["AdminUser"]["id"]).update(**data)
+        obj=models.Users.objects.filter(id=request.session["User"]["id"]).update(**data)
         info='更新成功'
         url=reverse("myhome_userinfo")
         return HttpResponse(f"<script>alert('{info}');location.href='"+url+"'</script>")

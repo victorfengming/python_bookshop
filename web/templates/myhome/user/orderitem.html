@@ -311,6 +311,7 @@
         $this=$(this)
         $.get("{% url 'myhome_delitem' %}",{'id':id},function(data){
             if(!data["code"]){
+                alert(data["msg"])
                 $this.parents("tr").remove()
                 if($("tr").length==1){
                     location.href="{% url 'myhome_userinfo' %}"

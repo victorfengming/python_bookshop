@@ -1,6 +1,6 @@
 <html>
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
 
 <head>
     <meta charset="utf-8">
@@ -43,9 +43,9 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="account-area text-right">
                             <ul>
-                                {% if request.session.AdminUser.id %}
-                                <li><a>欢迎你,{{ request.session.AdminUser.phone }}</a></li>
-                                <li><a href="{% url 'myhome_userinfo' %}" >My Account</a></li>
+                                {% if request.session.User.id %}
+                                <li><a>欢迎你,{{ request.session.User.phone }}</a></li>
+                                <li><a href="{% url 'myhome_userinfo' %}" >我的账户</a></li>
                                 <li><a href="{% url 'myhome_logout' %}" >退出</a></li>
                                 {% else %}
                                 <li><a href="{% url 'myhome_login' %}" >登录</a></li>
@@ -74,12 +74,12 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
                         <div class="logo-area text-center logo-xs-mrg">
-                            <a href="index.html" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/index.html">
+                            <a href="/">
                                 <img src="/static/myhome/static/img/logo/logo1.png"  alt="logo" />
                             </a>
                         </div>
                     </div>
-                    {% if request.session.AdminUser.id %}
+                    {% if request.session.User.id %}
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                         <div class="my-cart">
                             <ul>
@@ -155,11 +155,8 @@
                         <div class="footer-top-menu bb-2">
                             <nav>
                                 <ul>
-                                    <li><a href="#">home</a></li>
-                                    <li><a href="#">Enable Cookies</a></li>
-                                    <li><a href="#">Privacy and Cookie Policy</a></li>
-                                    <li><a href="#">contact us</a></li>
-                                    <li><a href="#">blog</a></li>
+                                    <li><a href="/">首页</a></li>
+                                    <li><a href="{% url 'myhome_userinfo' %}">我的账户</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -167,137 +164,24 @@
                 </div>
             </div>
         </div><!-- footer-top-start -->
-        <!-- footer-mid-start -->
-        <div class="footer-mid ptb-50">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-12">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="single-footer br-2 xs-mb">
-                                    <div class="footer-title mb-20">
-                                        <h3>Products</h3>
-                                    </div>
-                                    <div class="footer-mid-menu">
-                                        <ul>
-                                            <li><a href="about.html" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/about.html">About us</a></li>
-                                            <li><a href="#">Prices drop </a></li>
-                                            <li><a href="#">New products</a></li>
-                                            <li><a href="#">Best sales</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="single-footer br-2 xs-mb">
-                                    <div class="footer-title mb-20">
-                                        <h3>Our company</h3>
-                                    </div>
-                                    <div class="footer-mid-menu">
-                                        <ul>
-                                            <li><a href="contact.html" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/contact.html">Contact us</a></li>
-                                            <li><a href="#">Sitemap</a></li>
-                                            <li><a href="#">Stores</a></li>
-                                            <li><a href="register.html" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/register.html">My account </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="single-footer br-2 xs-mb">
-                                    <div class="footer-title mb-20">
-                                        <h3>Your account</h3>
-                                    </div>
-                                    <div class="footer-mid-menu">
-                                        <ul>
-                                            <li><a href="contact.html" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/contact.html">Addresses</a></li>
-                                            <li><a href="#">Credit slips </a></li>
-                                            <li><a href="#">Orders</a></li>
-                                            <li><a href="#">Personal info</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <div class="single-footer mrg-sm">
-                            <div class="footer-title mb-20">
-                                <h3>STORE INFORMATION</h3>
-                            </div>
-                            <div class="footer-contact">
-                                <p class="adress"><span>My Company</span> 42 avenue des Champs Elysées 75000 Paris France</p>
-                                <p><span>Call us now:</span>(+1)866-540-3229</p>
-                                <p><span>Email:</span> support@hastech.com</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- footer-mid-end -->
         <!-- footer-bottom-start -->
         <div class="footer-bottom">
             <div class="container">
                 <div class="row bt-2">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="copy-right-area">
-                            <p>Copyright ©<a href="javascript:if(confirm('http://www.bootstrapmb.com/  \n\n?????δ? Teleport Pro ȡ?أ??Ϊ ????·????????ʼ?ַ????ķ?Χ??  \n\n?Ҫ?ӷ??????????'))window.location='http://www.bootstrapmb.com/'" tppabs="http://www.bootstrapmb.com/">Koparion</a>. All Right Reserved.</p>
+                            <p>Copyright ©<a>Koparion</a>. All Right Reserved.</p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="payment-img text-right"><a href="#"><img src="/static/myhome/static/img/1.png" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/1.png" alt="payment" /></a></div>
+                        <div class="payment-img text-right"><a href="###"><img src="/static/myhome/static/img/1.png"  alt="payment" /></a></div>
                     </div>
                 </div>
             </div>
         </div><!-- footer-bottom-end -->
     </footer><!-- footer-area-end -->
-    <!-- Modal -->
-    <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button></div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-5 col-sm-5 col-xs-12">
-                            <div class="modal-tab">
-                                <div class="product-details-large tab-content">
-                                    <div class="tab-pane active" id="image-1"><img src="/static/myhome/static/img/product/quickview-l4.jpg" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/product/quickview-l4.jpg" alt="" /></div>
-                                    <div class="tab-pane" id="image-2"><img src="/static/myhome/static/img/product/quickview-l2.jpg" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/product/quickview-l2.jpg" alt="" /></div>
-                                    <div class="tab-pane" id="image-3"><img src="/static/myhome/static/img/product/quickview-l3.jpg" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/product/quickview-l3.jpg" alt="" /></div>
-                                    <div class="tab-pane" id="image-4"><img src="/static/myhome/static/img/product/quickview-l5.jpg" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/product/quickview-l5.jpg" alt="" /></div>
-                                </div>
-                                <div class="product-details-small quickview-active owl-carousel"><a class="active" href="#image-1"><img src="/static/myhome/static/img/product/quickview-s4.jpg" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/product/quickview-s4.jpg" alt="" /></a><a href="#image-2"><img src="/static/myhome/static/img/product/quickview-s2.jpg" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/product/quickview-s2.jpg" alt="" /></a><a href="#image-3"><img src="/static/myhome/static/img/product/quickview-s3.jpg" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/product/quickview-s3.jpg" alt="" /></a><a href="#image-4"><img src="/static/myhome/static/img/product/quickview-s5.jpg" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/img/product/quickview-s5.jpg" alt="" /></a></div>
-                            </div>
-                        </div>
-                        <div class="col-md-7 col-sm-7 col-xs-12">
-                            <div class="modal-pro-content">
-                                <h3>Chaz Kangeroo Hoodie3</h3>
-                                <div class="price"><span>$70.00</span></div>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet.</p>
-                                <div class="quick-view-select">
-                                    <div class="select-option-part"><label>Size*</label><select class="select">
-                                            <option value="">S</option>
-                                            <option value="">M</option>
-                                            <option value="">L</option>
-                                        </select></div>
-                                    <div class="quickview-color-wrap"><label>Color*</label>
-                                        <div class="quickview-color">
-                                            <ul>
-                                                <li class="blue">b</li>
-                                                <li class="red">r</li>
-                                                <li class="pink">p</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <form action="#"><input type="number" value="1" /><button>Add to cart</button></form><span><i class="fa fa-check"></i>In stock</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- Modal end -->
+
+
     <!-- all js here -->
     <!-- jquery latest version -->
     <script src="/static/myhome/static/js/vendor/jquery-1.12.0.min.js" tppabs="http://v.bootstrapmb.com/2018/7/rlrum1631/js/vendor/jquery-1.12.0.min.js"></script><!-- bootstrap js -->

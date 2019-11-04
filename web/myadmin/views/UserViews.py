@@ -21,28 +21,28 @@ from .. import models
 def index(request):
     global ob
     ob=None
-    keywords=None
+    keywords=''
     types='all'
     search=''
     if request.method=='GET':
         # 查询所有有效的会员数据 除了没有被逻辑删除的图书
         ob=models.Users.objects.all().exclude(isdel="004002")
     else:
-        data=request.POST.dict()
-        data.pop("csrfmiddlewaretoken")
-        keywords=data["keywords"]
+        keywords=request.POST.get("keywords",'')
         keywords=keywords.strip()
-        types=data["type"]
+        types=request.POST.get("type",'')
         # 没有选指定的类别时，按照所有类别进行查询
+        if not keywords:
+            url=reverse("myadmin_user_index")
+            return HttpResponse(f"<script>alert('查询内容不能为空！！！');location.href='{url}'</script>")
         if types=='all':
-            if keywords:
-                ob=models.Users.objects.filter(
-                      Q(nickname__contains=keywords) |
-                      Q(phone__contains=keywords) |
-                      Q(homeaddress__contains=keywords) |
-                      Q(sex__contains=keywords) |
-                      Q(usertype__contains=keywords) 
-                )
+            ob=models.Users.objects.filter(
+                    Q(nickname__contains=keywords) |
+                    Q(phone__contains=keywords) |
+                    Q(homeaddress__contains=keywords) |
+                    Q(sex__contains=keywords) |
+                    Q(usertype__contains=keywords) 
+            )
         elif types=='sex':
             if keywords=='男':
                 search={types+'__contains':'1'}
@@ -122,8 +122,8 @@ def adduser(request):
 def deluser(request,id):
     try:
         data=models.Users.objects.get(id=id)
-        url='.'+data.face
-        os.remove(url)
+        # url='.'+data.face
+        # os.remove(url)
         data.isdel='004002'
         data.save()
         info='删除成功'
@@ -144,10 +144,14 @@ def moduser(request):
     else:
         data=request.POST.dict()
         data.pop('csrfmiddlewaretoken')
+        if not re.findall('^1\d{10}$',data['phone']):
+            id=data["id"]
+            url=reverse("myadmin_user_mod")
+            return HttpResponse(f"<script>alert('请输入有效的手机号');location.href='{url}?id={id}'</script>")
         try:
             filename=imgupload(request)
             if filename:
-                os.remove('.'+data["old_face"])
+                # os.remove('.'+data["old_face"])
                 data["face"]=filename
             else:
                 data["face"]=data["old_face"]

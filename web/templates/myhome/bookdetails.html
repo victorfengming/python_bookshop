@@ -250,6 +250,7 @@
                                 <div class="product-total-2">
                                     {% for i in bookinfo.typeid.all %}
                                     {% for v in i.books_set.all %}
+                                    {% if v.id != bookinfo.id %}
                                     <div class="single-most-product bd mb-18">
                                         <div class="most-product-img"><a href="{% url 'myhome_bookdetail' v.id %}"><img src="/{{ v.bookimgs_set.first.img_url }}"  alt="book" /></a></div>
                                         <div class="most-product-content">
@@ -270,6 +271,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% endif %}
                                     {% endfor %}
                                     {% endfor %}
                                 </div>
@@ -285,7 +287,8 @@
 <script>
     $("#addcart").click(function(){
         // 检测当前用户是否登录
-        var uid='{{request.session.AdminUser.id}}'
+        var uid='{{request.session.User.id}}'
+        console.log(uid)
         if(uid){
             // 已经登陆
             // 获取商品id和数量
@@ -293,11 +296,12 @@
             data.bookid='{{ bookinfo.id }}'
             data.num=$(this).parents('form').find('input[name=num]').val()
             res=/\d+/
-            if(!res.test(data.num)){
+            console.log(res.test(data.num))
+            if(data.num<=0){
                 alert("数量输入错误，请输入有效的数量")
                 $("input[name=num]").val(1)
                 return;
-            }
+            }            
             // 发送数据到后台，把数据添加到购物车
             // 购物车里的信息  
             // 用户id(只要登录就可以查到用户的id)  

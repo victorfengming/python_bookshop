@@ -61,11 +61,6 @@ urlpatterns = [
     # path('order/list', OrderViews.mylist,name='myhome_order_list'),
 
 
-
-
-
-
-
     #登录
     path('login', LoginViews.login,name='myhome_login'),
     path('dologin',LoginViews.dologin,name='myhome_dologin'),

@@ -22,7 +22,7 @@ def dologin(request):
     if not check_password(data["password"],obj[0].password):
         return HttpResponse("<script>alert('密码错误');history.back()</script>")
     else:
-        request.session['AdminUser']={'id':obj[0].id,'phone':obj[0].phone}
+        request.session['User']={'id':obj[0].id,'phone':obj[0].phone}
         url=reverse('myhome_index')
         return HttpResponse(f"<script>alert('登录成功');location.href='{nextpath}'</script>")
 

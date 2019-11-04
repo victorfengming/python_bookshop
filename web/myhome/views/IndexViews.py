@@ -13,7 +13,7 @@ def typecom():
         i.sub=models.Booktype.objects.filter(pid=i.id)
     return typelist
 def usercom(request):
-    userobj=models.Users.objects.get(id=request.session["AdminUser"]["id"])
+    userobj=models.Users.objects.get(id=request.session["User"]["id"])
     return userobj
 
 #首页视图
@@ -39,7 +39,8 @@ def booklist(request,typeid):
     bidlist=[]
     for i in range(3):
         res=random.randrange(1,models.Books.objects.all().count())
-        bidlist.append(res)
+        bidlist.append(res+50)
+    print(bidlist)
     booklist=models.Books.objects.filter(id__in=bidlist)
 
    
@@ -49,10 +50,12 @@ def booklist(request,typeid):
 #详情页
 def detail(request,bookid):
     bookobj=models.Books.objects.get(id=bookid)
-    booklist=models.Books.objects.all()
+    booklist=models.Books.objects.all().exclude(id=bookid)
+    
     context={'typelist':typecom(),'bookinfo':bookobj,'booklist':booklist}
     return render(request,'myhome/bookdetails.html',context)
 
+#搜索图书
 def booksearch(request):
     keywords=request.POST.get("keywords",'')
     bookob=models.Books.objects.all().exclude(isdel="004002")

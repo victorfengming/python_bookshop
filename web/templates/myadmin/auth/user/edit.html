@@ -53,9 +53,11 @@
                                            <p>可用权限组</p>
                                            <select id="select1" multiple="multiple" style="width:300px;height:200px; float:left; border:1px solid black; padding:4px; ">
                                               {% for v in groupdata %}
-                                             
+                                              {% for i in userinfo.groups.all %}
+                                              {% if v.id != i.id %}
                                                 <option value="{{ v.id }}">{{ v.name }}</option>
-
+                                              {% endif %}
+                                              {% endfor %}
                                               {% endfor %}
                                            </select>
                                            <p><button id="add_all" class="am-btn am-btn-warning am-btn-xs" type="button">全选&nbsp;&gt;</button></p>

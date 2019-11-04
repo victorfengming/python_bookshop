@@ -14,7 +14,7 @@ def index(request):
 def addcart(request):
     data=request.POST.dict()
     #判断在购物车里这个用户下有没有这个商品
-    uid=request.session["AdminUser"]["id"]
+    uid=request.session["User"]["id"]
     # 如果有，就数量加1
     try:
         userobj=models.Users.objects.get(id=uid)
@@ -41,7 +41,7 @@ def delcart(request):
     try:
         bookid=request.GET.get("bookid")
         bookobj=models.Books.objects.get(id=bookid)
-        userobj=models.Users.objects.get(id=request.session["AdminUser"]["id"])
+        userobj=models.Users.objects.get(id=request.session["User"]["id"])
         cartobj=userobj.cart_set.get(bookid=bookobj)
         cartobj.delete()
         return JsonResponse({'code':0,'msg':'删除成功'})
@@ -51,7 +51,7 @@ def delcart(request):
 def modicart(request):
     try:
         data=request.GET.dict()
-        userobj=models.Users.objects.get(id=request.session["AdminUser"]["id"])
+        userobj=models.Users.objects.get(id=request.session["User"]["id"])
         cartobj=userobj.cart_set.get(bookid=data["bookid"])
         cartobj.num=data["num"]
         cartobj.save()

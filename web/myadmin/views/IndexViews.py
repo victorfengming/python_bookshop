@@ -5,6 +5,7 @@ from .. import models
 from django.contrib.auth.models import User,Permission,Group
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import permission_required
+import re
 # Create your views here.
 
 def index(request):
@@ -116,19 +117,26 @@ def authuser_insert(request):
     try:
         data=request.POST.dict()
         data.pop("csrfmiddlewaretoken")
-        gs=request.POST.getlist("gs")
+        #创建时存在分配权限组
+        gs=request.POST.getlist("gs",'')
+        #如果存在,就删除data中的gs
+        if not data["username"].isalpha():
+            return HttpResponse("<script>alert('用户名应该以字母或汉字命名');location.href='/myadmin/auth/user/add';</script>")
+        if not re.findall('^[0-9a-zA-Z_]+@[0-9a-zA-Z_]+\.com$',data['email']):
+            return HttpResponse("<script>alert('请输入有效的邮箱');location.href='/myadmin/auth/user/add';</script>")
+        if not re.findall('\d{6}',data['password']):
+            return HttpResponse("<script>alert('请输入六位数字密码');location.href='/myadmin/auth/user/add';</script>")
         if gs:
             data.pop("gs")
+        if data["is_superuser"]=='1':
+            data["is_superuser"]=True
+            ob=User.objects.create_superuser(**data)
         else:
-            if data["is_superuser"]=='1':
-                data["is_superuser"]=True
-                ob=User.objects.create_superuser(**data)
-            else:
-                ob=User.objects.create_user(**data) 
-            if gs:
-                ob.groups.set(gs)
-                ob.save()
-            return HttpResponse("<script>alert('管理员创建成功');location.href='/myadmin/auth/user/index';</script>")
+            ob=User.objects.create_user(**data) 
+        if gs:
+            ob.groups.set(gs)
+            ob.save()
+        return HttpResponse("<script>alert('管理员创建成功');location.href='/myadmin/auth/user/index';</script>")
     except:
         return HttpResponse("<script>alert('管理员创建失败');location.href='/myadmin/auth/user/add';</script>")
 @permission_required('auth.add_group',raise_exception=True)
