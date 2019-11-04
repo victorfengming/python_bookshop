@@ -13,6 +13,12 @@ File Encoding         : 65001
 Date: 2019-10-31 02:20:42
 */
 
+show DATABASES;
+
+use bookshop;
+
+show tables;
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -169,7 +175,7 @@ CREATE TABLE `auth_user` (
 -- ----------------------------
 -- Records of auth_user
 -- ----------------------------
-INSERT INTO `auth_user` VALUES ('8', 'pbkdf2_sha256$150000$thpY8PkmPieJ$WSEO2XvUDF+LRl3a4aRlK+g34vgo9UTFRfRQFc5GXxc=', '2019-10-29 14:38:21.723055', '1', '杨素桢', '', '', '3352439264@qq.com', '1', '1', '2019-10-29 03:11:05.724172');
+INSERT INTO `auth_user` VALUES ('8', 'pbkdf2_sha256$150000$thpY8PkmPieJ$WSEO2XvUDF+LRl3a4aRlK+g34vgo9UTFRfRQFc5GXxc=', '2019-10-29 14:38:21.723055', '1', '于凤明', '', '', '3352439264@qq.com', '1', '1', '2019-10-29 03:11:05.724172');
 INSERT INTO `auth_user` VALUES ('10', 'pbkdf2_sha256$150000$1tSemUtKtPYr$/8ifcbbQFKLl7gTpu9Aaz7aLh7oU1ygdNPGNLx3g/Ew=', '2019-10-29 09:12:26.824745', '0', '彭柳杨', '', '', '3352439264@qq.com', '0', '1', '2019-10-29 09:09:36.436384');
 INSERT INTO `auth_user` VALUES ('11', 'pbkdf2_sha256$150000$c2jrvGdczQ9Y$jSjn7sq3oSVXsN5aNHy5+g+KuBQ2SRgasmmyiDCuSV0=', '2019-10-29 14:46:42.542359', '1', 'dell', '', '', '32@qq.com', '1', '1', '2019-10-29 14:45:32.636379');
 
@@ -366,7 +372,7 @@ CREATE TABLE `myadmin_address` (
 -- ----------------------------
 -- Records of myadmin_address
 -- ----------------------------
-INSERT INTO `myadmin_address` VALUES ('16', '杨素桢', '12312312312', '辽宁省丹东市元宝区金山镇', '0', '0', '10');
+INSERT INTO `myadmin_address` VALUES ('16', '于凤明', '12312312312', '辽宁省沈阳市铁西区兴华南街', '0', '0', '10');
 
 -- ----------------------------
 -- Table structure for myadmin_bookimgs
@@ -522,7 +528,7 @@ CREATE TABLE `myadmin_order` (
 -- ----------------------------
 -- Records of myadmin_order
 -- ----------------------------
-INSERT INTO `myadmin_order` VALUES ('9', '杨素桢', '12312312312', '辽宁省丹东市元宝区金山镇', '18.80', '1', '2019-10-29 14:28:55.395111', '2019-10-29 14:30:08.000000', '10');
+INSERT INTO `myadmin_order` VALUES ('9', '于凤明', '12312312312', '辽宁省沈阳市铁西区兴华南街', '18.80', '1', '2019-10-29 14:28:55.395111', '2019-10-29 14:30:08.000000', '10');
 
 -- ----------------------------
 -- Table structure for myadmin_orderitem
